@@ -9,5 +9,16 @@
         <%= link_to 'Posts', posts_path, class: 'nav-link' %>
       </li>
     </ul>
+    <ul class="navbar-nav ml-auto">
+      <% if user_signed_in? %>
+        <li class="nav-item <%= params["controller"] == 'posts' ? 'active' : '' %>">
+          <%= link_to 'Logout', destroy_user_session_path, class: 'nav-link', method: :delete %>
+        </li>
+      <% else %>
+        <li class="nav-item <%= params["controller"] == 'posts' ? 'active' : '' %>">
+          <%= link_to 'Login', new_user_session_path, class: 'nav-link' %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </nav>
