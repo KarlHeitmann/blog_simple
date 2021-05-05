@@ -16,8 +16,8 @@ Turbolinks.start()
 ActiveStorage.start()
 
 
-async function fetchCoinData() {
-  const data_raw = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
+async function fetchCoinData(coin_id) {
+  const data_raw = await fetch(`https://api.coingecko.com/api/v3/coins/${coin_id}`)
   const data = await data_raw.json()
 
   const bitcoin_price_usd = data['market_data']['current_price']['usd']
@@ -32,7 +32,20 @@ async function fetchCoinData() {
   bitcoin_name_container.innerText = bitcoin_price_name
 
   console.log("############################################")
-  console.log("          T E R M I N A D O")
+  console.log("          T E R M I N A D O con async await ")
 }
 
-document.addEventListener('turbolinks:load', fetchCoinData)
+// TAREA: Hacerlo con + de 3 monedas (o las que quiera) y buscar el bitcoin en fetchAllCoins
+function fetchAllCoins() {
+  fetch('https://api.coingecko.com/api/v3/coins/list')
+    .then(data => {
+      return data.json()
+    })
+    .then(data => {
+      fetchCoinData(data[0]['id'])
+      fetchCoinData(data[1]['id'])
+    })
+
+}
+
+document.addEventListener('turbolinks:load', fetchAllCoins)
