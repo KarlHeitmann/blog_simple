@@ -16,23 +16,23 @@ Turbolinks.start()
 ActiveStorage.start()
 
 
-function fetchCoinData() {
-  fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
-    .then(data => {
-      return data.json()
-    })
-    .then(data => {
-      const bitcoin_price_usd = data['market_data']['current_price']['usd']
-      console.log("BITCOIN PRICE USD",bitcoin_price_usd)
+async function fetchCoinData() {
+  const data_raw = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
+  const data = await data_raw.json()
 
-      const bitcoin_price_name = data['name']
+  const bitcoin_price_usd = data['market_data']['current_price']['usd']
+  console.log("BITCOIN PRICE USD",bitcoin_price_usd)
 
-      const bitcoin_price_container = document.querySelector('#bitcoin-value')
-      bitcoin_price_container.innerText = `$ ${bitcoin_price_usd}`
+  const bitcoin_price_name = data['name']
 
-      const bitcoin_name_container = document.querySelector('#bitcoin-name')
-      bitcoin_name_container.innerText = bitcoin_price_name
-    })
+  const bitcoin_price_container = document.querySelector('#bitcoin-value')
+  bitcoin_price_container.innerText = `$ ${bitcoin_price_usd}`
+
+  const bitcoin_name_container = document.querySelector('#bitcoin-name')
+  bitcoin_name_container.innerText = bitcoin_price_name
+
+  console.log("############################################")
+  console.log("          T E R M I N A D O")
 }
 
 document.addEventListener('turbolinks:load', fetchCoinData)
