@@ -15,25 +15,24 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
-  .then(data => {
-    return data.json()
-  })
-  .then(data => {
-    console.log(data)
-    console.log("\n\n***************")
-    console.log("\n\n***************")
-    console.log("\n\n***************")
-    console.log(data['market_data'])
-    console.log("\n\n***************")
-    console.log("\n\n***************")
-    console.log("\n\n***************")
-    console.log(data['market_data']['current_price'])
-    console.log("\n\n***************")
-    console.log("\n\n***************")
-    console.log("\n\n***************")
-    console.log(data['market_data']['current_price']['usd'])
 
-    const bitcoin_price_usd = data['market_data']['current_price']['usd']
-    console.log("BITCOIN PRICE USD",bitcoin_price_usd)
-  })
+function fetchCoinData() {
+  fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
+    .then(data => {
+      return data.json()
+    })
+    .then(data => {
+      const bitcoin_price_usd = data['market_data']['current_price']['usd']
+      console.log("BITCOIN PRICE USD",bitcoin_price_usd)
+
+      const bitcoin_price_name = data['name']
+
+      const bitcoin_price_container = document.querySelector('#bitcoin-value')
+      bitcoin_price_container.innerText = `$ ${bitcoin_price_usd}`
+
+      const bitcoin_name_container = document.querySelector('#bitcoin-name')
+      bitcoin_name_container.innerText = bitcoin_price_name
+    })
+}
+
+document.addEventListener('turbolinks:load', fetchCoinData)
