@@ -14,3 +14,26 @@ import "./main.scss"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
+  .then(data => {
+    return data.json()
+  })
+  .then(data => {
+    console.log(data)
+    console.log("\n\n***************")
+    console.log("\n\n***************")
+    console.log("\n\n***************")
+    console.log(data['market_data'])
+    console.log("\n\n***************")
+    console.log("\n\n***************")
+    console.log("\n\n***************")
+    console.log(data['market_data']['current_price'])
+    console.log("\n\n***************")
+    console.log("\n\n***************")
+    console.log("\n\n***************")
+    console.log(data['market_data']['current_price']['usd'])
+
+    const bitcoin_price_usd = data['market_data']['current_price']['usd']
+    console.log("BITCOIN PRICE USD",bitcoin_price_usd)
+  })
